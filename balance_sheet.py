@@ -206,28 +206,22 @@ class BalanceSheet:
 
 ### function for save data ###########
     def add_data(self):
-        if self.var_liabi.get() == "" or self.var_assets.get() == "":
-            messagebox.showerror("Error", "At least one of the fields (liabilities or assets) is required", parent=self.root)
-
-        # if self.var_liabi.get()=="" or self.var_assets.get()=="":
-        #     messagebox.showerror("Error","All fields are required",parent=self.root)
-        else:
-            try:
-                conn=mysql.connector.connect(host="localhost",username="root",password="root",database="accounting_software")
-                my_cursor=conn.cursor()
-                my_cursor.execute("insert into BalanceSheet values(%s,%s,%s,%s)",(
-                                                                                self.var_liabi.get(),
-                                                                                self.var_amnt1.get(),
-                                                                                self.var_assets.get(),
-                                                                                self.var_amnt2.get(),
-                                                                            ))
-                conn.commit()
-                self.fetch_data()
-                conn.close()
-                messagebox.showinfo("Sucess","Balance Sheet details has been added Sucessfully",parent=self.root)
-                
-            except Exception as es:
-                messagebox.showerror("Error",f"Due To:{str(es)}",parent=self.root)
+        try:
+            conn=mysql.connector.connect(host="localhost",username="root",password="root",database="accounting_software")
+            my_cursor=conn.cursor()
+            my_cursor.execute("insert into BalanceSheet values(%s,%s,%s,%s)",(
+                                                                            self.var_liabi.get(),
+                                                                            self.var_amnt1.get(),
+                                                                            self.var_assets.get(),
+                                                                            self.var_amnt2.get(),
+                                                                        ))
+            conn.commit()
+            self.fetch_data()
+            conn.close()
+            messagebox.showinfo("Sucess","Balance Sheet details has been added Sucessfully",parent=self.root)
+            
+        except Exception as es:
+            messagebox.showerror("Error",f"Due To:{str(es)}",parent=self.root)
 
 
 # ###  fetch data from database ###########
