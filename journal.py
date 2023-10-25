@@ -3,6 +3,8 @@ from tkinter import*
 from tkinter import ttk
 from PIL import Image,ImageTk
 from tkinter import messagebox
+from datetime import datetime
+
 
 
 import mysql.connector
@@ -23,6 +25,8 @@ class Journal:
         self.var_lf=StringVar()
         self.var_debit=StringVar()
         self.var_credit=StringVar()
+        self.var_searchtxt=StringVar()
+        self.var_search=StringVar()
 
 
          #first image for header
@@ -167,13 +171,13 @@ class Journal:
         search_entry.grid(row=0,column=2,padx=10,pady=5,sticky=W)
 
         #buttons
-        search_btn=Button(search_frame,text='Search',width=10,font=('times new roman',13,"bold"),bg='blue',fg='white')
+        search_btn=Button(search_frame,text='Search',command=self.search_data,width=10,font=('times new roman',13,"bold"),bg='blue',fg='white')
         search_btn.grid(row=0,column=3,padx=4)
 
         showAll_btn=Button(search_frame,text='Show All',width=10,font=('times new roman',13,"bold"),bg='blue',fg='white')
         showAll_btn.grid(row=0,column=4,padx=4)
 
-########################################### Table for data show############################################
+######################################### Table for data show ############################################
 
 
         table_frame=LabelFrame(right_frame,bd=2,bg='white',relief=RIDGE)
@@ -256,6 +260,31 @@ class Journal:
         self.var_lf.set("")
         self.var_debit.set("")
         self.var_credit.set("")
+
+
+######################   Search data ###################################
+
+
+    def search_data(self):
+        # import pdb;pdb.set_trace()
+        if self.var_searchtxt.get()=="" or self.var_search.get()=="Select Option":
+            messagebox.showerror("Error","Select Combo option and enter entry box",parent=self.root)
+        else:
+            try:
+                conn=mysql.connector.connect(host='localhost',username='root',password="root",database="accounting_software")
+                my_cursor=conn.cursor()
+                my_cursor.execute("select * from journal where " +str(self.var_search.get())+" LIKE '%"+str(self.var_searchtxt.get())+"%'")
+                rows=my_cursor.fetchall()         
+                if len(rows)!=0:
+                    self.journal_table.delete(*self.journal_table.get_children())
+                    for i in rows:
+                        self.journal_table.insert("",END,values=i)
+                    if rows==None:
+                        messagebox.showerror("Error","Data Not Found",parent=self.root)
+                        conn.commit()
+                conn.close()
+            except Exception as es:
+                messagebox.showerror("Error",f"Due To :{str(es)}",parent=self.root)
 
 
         
