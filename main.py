@@ -13,6 +13,7 @@ import numpy as np
 
 
 from journal import Journal
+from balance_sheet import BalanceSheet
 
 
 class Account:
@@ -91,10 +92,10 @@ class Account:
         img7=img7.resize((180,180),Image.ANTIALIAS)
         self.photoimg7=ImageTk.PhotoImage(img7)
 
-        bb=Button(bg_img,image=self.photoimg7,cursor='hand2')
+        bb=Button(bg_img,image=self.photoimg7,command=self.balance_sheet_details,cursor='hand2')
         bb.place(x=800,y=80,width=180,height=180)
 
-        bb_1=Button(bg_img,text="Balance Sheet",cursor='hand2',font=("times new roman",15,"bold"),bg="darkblue",fg="white")
+        bb_1=Button(bg_img,text="Balance Sheet",command=self.balance_sheet_details,cursor='hand2',font=("times new roman",15,"bold"),bg="darkblue",fg="white")
         bb_1.place(x=800,y=240,width=180,height=40)
 
 
@@ -161,6 +162,15 @@ class Account:
     def journal_details(self):
         self.new_window=Toplevel(self.root)
         self.app=Journal(self.new_window)
+
+
+
+    def balance_sheet_details(self):
+        self.new_window=Toplevel(self.root)
+        self.app=BalanceSheet(self.new_window)
+
+
+        
 
 
 
