@@ -15,7 +15,7 @@ import numpy as np
 from journal import Journal
 from balance_sheet import BalanceSheet
 from ledger import Ledger
-
+from capital import Capital
 
 class Account:
     def __init__(self,root):
@@ -105,10 +105,10 @@ class Account:
         img8=img8.resize((180,180),Image.ANTIALIAS)
         self.photoimg8=ImageTk.PhotoImage(img8)
 
-        ca_b=Button(bg_img,image=self.photoimg8,cursor='hand2')
+        ca_b=Button(bg_img,image=self.photoimg8,command=self.capital_account_details,cursor='hand2')
         ca_b.place(x=1100,y=80,width=180,height=180)
 
-        ca_b_1=Button(bg_img,text="Capital Account",cursor='hand2',font=("times new roman",15,"bold"),bg="darkblue",fg="white")
+        ca_b_1=Button(bg_img,text="Capital Account",command=self.capital_account_details,cursor='hand2',font=("times new roman",15,"bold"),bg="darkblue",fg="white")
         ca_b_1.place(x=1100,y=240,width=180,height=40)
 
 ########################### Second row button####################################
@@ -174,6 +174,13 @@ class Account:
     def ledger_details(self):
         self.new_window=Toplevel(self.root)
         self.app=Ledger(self.new_window)
+
+
+    def capital_account_details(self):
+        self.new_window=Toplevel(self.root)
+        self.app=Capital(self.new_window)
+
+    
 
 
         
