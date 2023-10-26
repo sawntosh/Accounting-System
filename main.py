@@ -17,6 +17,8 @@ from balance_sheet import BalanceSheet
 from ledger import Ledger
 from capital import Capital
 from current import Current
+from realisation import Realisation
+from revaluation import Revaluation
 class Account:
     def __init__(self,root):
         self.root=root
@@ -128,10 +130,10 @@ class Account:
         img10=img10.resize((180,180),Image.ANTIALIAS)
         self.photoimg10=ImageTk.PhotoImage(img10)
 
-        rb=Button(bg_img,image=self.photoimg10,cursor='hand2')
+        rb=Button(bg_img,image=self.photoimg10,command=self.realisation_acc_details,cursor='hand2')
         rb.place(x=500,y=350,width=180,height=180)
 
-        rb_1=Button(bg_img,text="Realisation Account",cursor='hand2',font=("times new roman",15,"bold"),bg="darkblue",fg="white")
+        rb_1=Button(bg_img,text="Realisation Account",command=self.realisation_acc_details,cursor='hand2',font=("times new roman",15,"bold"),bg="darkblue",fg="white")
         rb_1.place(x=500,y=500,width=180,height=40)
 
         # Revaluation Account Button
@@ -139,10 +141,10 @@ class Account:
         img11=img11.resize((180,180),Image.ANTIALIAS)
         self.photoimg11=ImageTk.PhotoImage(img11)
 
-        re_b=Button(bg_img,image=self.photoimg11,cursor='hand2')
+        re_b=Button(bg_img,image=self.photoimg11,command=self.revaluation_acc_details,cursor='hand2')
         re_b.place(x=800,y=350,width=180,height=180)
 
-        re_b_1=Button(bg_img,text="Revaluation Account",cursor='hand2',font=("times new roman",15,"bold"),bg="darkblue",fg="white")
+        re_b_1=Button(bg_img,text="Revaluation Account",command=self.revaluation_acc_details,cursor='hand2',font=("times new roman",15,"bold"),bg="darkblue",fg="white")
         re_b_1.place(x=800,y=500,width=180,height=40)
 
 
@@ -184,13 +186,13 @@ class Account:
         self.new_window=Toplevel(self.root)
         self.app=Current(self.new_window)
 
-    
+    def realisation_acc_details(self):
+        self.new_window=Toplevel(self.root)
+        self.app=Realisation(self.new_window)
 
-
-        
-
-
-
+    def revaluation_acc_details(self):
+        self.new_window=Toplevel(self.root)
+        self.app=Revaluation(self.new_window)
 
 
 ##########  exit button functions #############################
