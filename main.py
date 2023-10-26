@@ -16,7 +16,7 @@ from journal import Journal
 from balance_sheet import BalanceSheet
 from ledger import Ledger
 from capital import Capital
-
+from current import Current
 class Account:
     def __init__(self,root):
         self.root=root
@@ -117,10 +117,10 @@ class Account:
         img9=img9.resize((180,180),Image.ANTIALIAS)
         self.photoimg9=ImageTk.PhotoImage(img9)
 
-        cu_b=Button(bg_img,image=self.photoimg9,cursor='hand2')
+        cu_b=Button(bg_img,image=self.photoimg9,command=self.current_account_details,cursor='hand2')
         cu_b.place(x=200,y=350,width=180,height=180)
 
-        cu_b_1=Button(bg_img,text="Current Account",cursor='hand2',font=("times new roman",15,"bold"),bg="darkblue",fg="white")
+        cu_b_1=Button(bg_img,text="Current Account",command=self.current_account_details,cursor='hand2',font=("times new roman",15,"bold"),bg="darkblue",fg="white")
         cu_b_1.place(x=200,y=500,width=180,height=40)
 
         # Realisation Account Button
@@ -179,6 +179,10 @@ class Account:
     def capital_account_details(self):
         self.new_window=Toplevel(self.root)
         self.app=Capital(self.new_window)
+
+    def current_account_details(self):
+        self.new_window=Toplevel(self.root)
+        self.app=Current(self.new_window)
 
     
 
