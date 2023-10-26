@@ -232,7 +232,7 @@ class Journal:
                 conn.commit()
                 self.fetch_data()
                 conn.close()
-                messagebox.showinfo("Sucess","Students details has been added Sucessfully",parent=self.root)
+                messagebox.showinfo("Sucess","Journal details has been added Sucessfully",parent=self.root)
                 
             except Exception as es:
                 messagebox.showerror("Error",f"Due To:{str(es)}",parent=self.root)
