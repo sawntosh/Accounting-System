@@ -162,12 +162,12 @@ class Journal:
         search_label.grid(row=0,column=0,padx=10,pady=5,sticky=W)
 
         #search combo-box
-        search_combo=ttk.Combobox(search_frame,font=("times new roman",13,"bold"),state="readonly",width=10)
+        search_combo=ttk.Combobox(search_frame,textvariable=self.var_search,font=("times new roman",13,"bold"),state="readonly",width=10)
         search_combo['values']=("select","Date","id")
         search_combo.current(0)
         search_combo.grid(row=0,column=1,padx=2,pady=5,sticky=W)
 
-        search_entry=ttk.Entry(search_frame,width=28,font=('times new roman',12,"bold"))
+        search_entry=ttk.Entry(search_frame,textvariable=self.var_searchtxt,width=28,font=('times new roman',12,"bold"))
         search_entry.grid(row=0,column=2,padx=10,pady=5,sticky=W)
 
         #buttons
@@ -285,6 +285,10 @@ class Journal:
                 conn.close()
             except Exception as es:
                 messagebox.showerror("Error",f"Due To :{str(es)}",parent=self.root)
+
+
+##################  show all data  #######################
+
 
 
         
