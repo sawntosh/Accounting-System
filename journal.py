@@ -174,7 +174,7 @@ class Journal:
         search_btn=Button(search_frame,text='Search',command=self.search_data,width=10,font=('times new roman',13,"bold"),bg='blue',fg='white')
         search_btn.grid(row=0,column=3,padx=4)
 
-        showAll_btn=Button(search_frame,text='Show All',width=10,font=('times new roman',13,"bold"),bg='blue',fg='white')
+        showAll_btn=Button(search_frame,text='Show All',command=self.show_all_data,width=10,font=('times new roman',13,"bold"),bg='blue',fg='white')
         showAll_btn.grid(row=0,column=4,padx=4)
 
 ######################################### Table for data show ############################################
@@ -288,6 +288,14 @@ class Journal:
 
 
 ##################  show all data  #######################
+
+    def show_all_data(self):
+        self.var_search.set("select")
+        self.var_searchtxt.set("")
+        self.fetch_data()
+
+
+
 
 
 
