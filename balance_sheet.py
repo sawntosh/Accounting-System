@@ -24,6 +24,7 @@ class BalanceSheet:
         self.var_amnt1=StringVar()
         self.var_assets=StringVar()
         self.var_amnt2=StringVar()
+
         self.var_searchtxt=StringVar()
         self.var_search=StringVar()
 
@@ -154,19 +155,19 @@ class BalanceSheet:
         search_label.grid(row=0,column=0,padx=10,pady=5,sticky=W)
 
         #search combo-box
-        search_combo=ttk.Combobox(search_frame,font=("times new roman",13,"bold"),state="readonly",width=10)
-        search_combo['values']=("select","Date","id")
+        search_combo=ttk.Combobox(search_frame,textvariable=self.var_search,font=("times new roman",13,"bold"),state="readonly",width=10)
+        search_combo['values']=("select","liabilities","assets")
         search_combo.current(0)
         search_combo.grid(row=0,column=1,padx=2,pady=5,sticky=W)
 
-        search_entry=ttk.Entry(search_frame,width=28,font=('times new roman',12,"bold"))
+        search_entry=ttk.Entry(search_frame,textvariable=self.var_searchtxt,width=28,font=('times new roman',12,"bold"))
         search_entry.grid(row=0,column=2,padx=10,pady=5,sticky=W)
 
         #buttons
-        search_btn=Button(search_frame,text='Search',width=10,font=('times new roman',13,"bold"),bg='blue',fg='white')
+        search_btn=Button(search_frame,text='Search',command=self.search_data,width=10,font=('times new roman',13,"bold"),bg='blue',fg='white')
         search_btn.grid(row=0,column=3,padx=4)
 
-        showAll_btn=Button(search_frame,text='Show All',width=10,font=('times new roman',13,"bold"),bg='blue',fg='white')
+        showAll_btn=Button(search_frame,text='Show All',command=self.show_all_data,width=10,font=('times new roman',13,"bold"),bg='blue',fg='white')
         showAll_btn.grid(row=0,column=4,padx=4)
 
 ###################################### Table for data show ###########################################
@@ -248,6 +249,40 @@ class BalanceSheet:
 
 
 ######################   Search data ###################################
+
+
+    def search_data(self):
+            if self.var_searchtxt.get()=="" or self.var_search.get()=="Select Option":
+                messagebox.showerror("Error","Select Combo option and enter entry box",parent=self.root)
+            else:
+                try:
+                    conn=mysql.connector.connect(host='localhost',username='root',password="root",database="accounting_software")
+                    my_cursor=conn.cursor()
+                    query = f"SELECT * FROM BalanceSheet WHERE {self.var_search.get().lower()} LIKE '%{self.var_searchtxt.get().lower()}%'"
+                    my_cursor.execute(query)
+                    rows=my_cursor.fetchall()         
+                    if len(rows)!=0:
+                        self.BalanceSheet_table.delete(*self.BalanceSheet_table.get_children())
+                        for i in rows:
+                            self.BalanceSheet_table.insert("",END,values=i)
+                        if rows==None:
+                            messagebox.showerror("Error","Data Not Found",parent=self.root)
+                            conn.commit()
+                    conn.close()
+                except Exception as es:
+                    messagebox.showerror("Error",f"Due To :{str(es)}",parent=self.root)
+
+
+
+
+
+################ show all data ##################
+
+    def show_all_data(self):
+            self.var_search.set("select")
+            self.var_searchtxt.set("")
+            self.fetch_data()
+
 
 
     
