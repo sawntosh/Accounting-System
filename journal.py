@@ -163,7 +163,7 @@ class Journal:
 
         #search combo-box
         search_combo=ttk.Combobox(search_frame,textvariable=self.var_search,font=("times new roman",13,"bold"),state="readonly",width=10)
-        search_combo['values']=("select","Date","id")
+        search_combo['values']=("select","Date","particulars")
         search_combo.current(0)
         search_combo.grid(row=0,column=1,padx=2,pady=5,sticky=W)
 
@@ -266,14 +266,14 @@ class Journal:
 
 
     def search_data(self):
-        # import pdb;pdb.set_trace()
         if self.var_searchtxt.get()=="" or self.var_search.get()=="Select Option":
             messagebox.showerror("Error","Select Combo option and enter entry box",parent=self.root)
         else:
             try:
                 conn=mysql.connector.connect(host='localhost',username='root',password="root",database="accounting_software")
                 my_cursor=conn.cursor()
-                my_cursor.execute("select * from journal where " +str(self.var_search.get())+" LIKE '%"+str(self.var_searchtxt.get())+"%'")
+                query = f"SELECT * FROM journal WHERE {self.var_search.get()} LIKE '%{self.var_searchtxt.get()}%'"
+                my_cursor.execute(query)
                 rows=my_cursor.fetchall()         
                 if len(rows)!=0:
                     self.journal_table.delete(*self.journal_table.get_children())
