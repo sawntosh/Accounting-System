@@ -323,7 +323,7 @@ class Ledger:
             try:
                 conn=mysql.connector.connect(host='localhost',username='root',password="root",database="accounting_software")
                 my_cursor=conn.cursor()
-                query = f"SELECT * FROM ledger WHERE {self.var_search.get()} LIKE '%{self.var_searchtxt.get()}%'"
+                query = f"SELECT * FROM ledger WHERE {self.var_search.get().lower()} LIKE '%{self.var_searchtxt.get().lower()}%'"
                 my_cursor.execute(query)
                 rows=my_cursor.fetchall()         
                 if len(rows)!=0:
