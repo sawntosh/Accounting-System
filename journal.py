@@ -295,11 +295,6 @@ class Journal:
         self.fetch_data()
 
 
-
-
-
-
-        
 if __name__ == "__main__":
     root=Tk()
     obj=Journal(root)
