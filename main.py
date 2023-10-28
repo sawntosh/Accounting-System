@@ -198,7 +198,7 @@ class Account:
 ##########  exit button functions #############################
 
     def iexit(self):
-        self.iexit=tkinter.messagebox.askyesno("Accounting System","Are you sure exit this system",parent=self.root)
+        self.iexit=tkinter.messagebox.askyesno("Accounting System","Do you want to exit ?",parent=self.root)
         if self.iexit>0:
             self.root.destroy()
         else:
